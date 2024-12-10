@@ -148,7 +148,6 @@
 
     <div class="mt-6 sm:mt-8 flex justify-between space-y-4 sm:space-y-0 sm:flex-row">
       <button type="button" id="closeModalBtn" class="bg-red-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Annuler</button>
-      <input type="submit" value="Annuler"  id="closeModalBtn" class="bg-green-600 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
       <input type="submit" value="Valider" name="validateForm"id="validateForm" class="bg-green-600 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
     </div>
   </form>
@@ -183,7 +182,51 @@ if(isset($_POST['validateForm'])){
 
 ?>
 
+<div class="hidden lg:block overflow-x-auto">
+  <table class="min-w-full bg-white shadow-md rounded-lg border-collapse">
+    <thead>
+      <tr class="bg-gray-200 text-gray-700">
+        <th class="py-3 px-4 text-left text-sm font-semibold">Image</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Marque</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Modéle</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Année</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Prix par jour</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">status</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
 
+
+      <?php 
+      function affichvoiture($result){
+        while($i = mysqli_fetch_row($result)){
+          echo '<tr class="border-b hover:bg-gray-50">';
+          echo '<td class="py-3 px-4">';
+          echo '<img src="'.$i[5].'" class=" h-16 object-cover rounded-lg">';
+          echo '</td>';
+          echo '<td class="py-3 px-4 text-sm">'.$i[1].'</td>';
+          echo '<td class="py-3 px-4 text-sm">'.$i[2].'</td>';
+          echo '<td class="py-3 px-4 text-sm">'.$i[3].'</td>';
+          echo '<td class="py-3 px-4 text-sm">'.$i[7].'</td>';
+          echo '<td class="py-3 px-4 text-sm">'.$i[6].'</td>';
+          echo '<td class="py-3 px-4 text-sm">';
+          echo '   <form method="POST" action="">
+                      <button type="submit" name="Edit" value="'.$i[0].'" class="bg-blue-500  text-white py-1 px-3 rounded-md hover:bg-red-600">Edit</button>
+                      <button type="submit" name="remove" value="'.$i[0].'" class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600">Remove</button>
+                    </form>';
+          '</td>';
+        '</tr>';
+        }
+      
+      }
+      affichvoiture($result);
+
+
+      ?>
+    </tbody>
+  </table>
+</div>
 
 
 
