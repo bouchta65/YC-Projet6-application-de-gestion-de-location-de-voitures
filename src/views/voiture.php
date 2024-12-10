@@ -218,12 +218,24 @@ if(isset($_POST['validateForm'])){
           '</td>';
         '</tr>';
         }
-      
       }
+      
+
+        if(isset($_POST['remove'])){
+          $matricule = $_POST['remove'];
+          $sql3 = "DELETE from voiture where matricule='$matricule'";
+          mysqli_query($conn,$sql3);
+          
+          }
+         
+      $result  = mysqli_query($conn,$sql2);
       affichvoiture($result);
 
-
+    
       ?>
+
+
+
     </tbody>
   </table>
 </div>
