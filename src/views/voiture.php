@@ -87,7 +87,7 @@
       </div>
     </header>
     <div id="vehicleModal" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 hidden">
-  <form id="vehicleForm" class="bg-white rounded-lg w-full max-w-[60rem] sm:max-w-3/4 md:max-w-2/3 p-4 sm:p-6 shadow-lg overflow-y-auto" method='POST' action='voiture.php'>
+  <form id="vehicleForm" class="bg-white rounded-lg w-full max-w-[60rem] sm:max-w-3/4 md:max-w-2/3 p-4 sm:p-6 shadow-lg overflow-y-auto" method='POST' action='voiture.php' enctype="multipart/form-data">
     <div class="flex justify-between items-center mb-4 sm:mb-6">
       <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Nouvelle Voiture</h2>
       <button id="closeVehicleModal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
@@ -100,29 +100,28 @@
     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
       <!-- Left Side Inputs -->
       <div class="w-full max-w-[50rem] sm:w-2/3 space-y-4">
-        <div class="flex flex-col">
-          <label for="chassisNumber" class="font-medium text-gray-600 text-sm sm:text-base">Numéro de châssis</label>
-          <input type="text" id="chassisNumber" name="chassisNumber" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 188WW">
+      <div class="flex flex-col">
+          <label for="matricule" class="font-medium text-gray-600 text-sm sm:text-base">Matricule</label>
+          <input type="text" id="matricule" name="matricule" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: A12345">
         </div>
         <div class="flex flex-col">
-          <label for="licensePlate" class="font-medium text-gray-600 text-sm sm:text-base">Matricule</label>
-          <input type="text" id="licensePlate" name="licensePlate" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: Renault">
+          <label for="marque" class="font-medium text-gray-600 text-sm sm:text-base">Marque</label>
+          <input type="text" id="marque" name="marque" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: Renault">
         </div>
         <div class="flex flex-col">
-          <label for="brand" class="font-medium text-gray-600 text-sm sm:text-base">Marque</label>
-          <input type="text" id="brand" name="brand" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: Megane 3">
+          <label for="modele" class="font-medium text-gray-600 text-sm sm:text-base">Modèle</label>
+          <input type="text" id="modele" name="modele" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: Clio">
         </div>
         <div class="flex flex-col">
           <label for="productionDate" class="font-medium text-gray-600 text-sm sm:text-base">Date de mise en circulation</label>
-          <input type="date" id="productionDate" name="productionDate" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
+          <input type="number" id="productionDate" name="productionDate" class="p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 2022">        </div>
         <div class="flex flex-col">
           <label for="fuelType" class="font-medium text-gray-600 text-sm sm:text-base">Type carburant</label>
           <select id="fuelType" name="fuelType" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="diesel">Diesel</option>
-            <option value="petrol">Essence</option>
-            <option value="electric">Electrique</option>
-            <option value="hybrid">Hybride</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Essence">Essence</option>
+            <option value="Electrique">Electrique</option>
+            <option value="Hybride">Hybride</option>
           </select>
         </div>
       </div>
@@ -130,27 +129,27 @@
       <!-- Right Side Inputs -->
       <div class="w-full sm:w-1/3 bg-gray-100 rounded-lg p-4 space-y-4">
         <div class="flex flex-col">
-          <label for="vehicleImage" class="font-medium text-gray-600 text-sm sm:text-base">Image de Véhicule</label>
-          <input type="file" id="vehicleImage" name="vehicleImage" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <label for="imagevoiture" class="font-medium text-gray-600 text-sm sm:text-base">Image de Véhicule</label>
+          <input type="file" id="imagevoiture" name="imagevoiture" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
         <div class="flex flex-col">
           <label for="status" class="font-medium text-gray-600 text-sm sm:text-base">Etat</label>
           <select id="status" name="status" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="available">En Parc</option>
-            <option value="rented">Sous Location</option>
-            <option value="sold">Vendu</option>
+            <option value="En Parc">En Parc</option>
+            <option value="Sous Location">Sous Location</option>
           </select>
         </div>
         <div class="flex flex-col">
-          <label for="rentalPrice" class="font-medium text-gray-600 text-sm sm:text-base">Prix Location</label>
-          <input type="number" id="rentalPrice" name="rentalPrice" class="p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 3000 MAD">
+          <label for="prixvoiture" class="font-medium text-gray-600 text-sm sm:text-base">Prix Location</label>
+          <input type="number" id="prixvoiture" name="prixvoiture" class="p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ex: 3000 MAD">
         </div>
       </div>
     </div>
 
     <div class="mt-6 sm:mt-8 flex justify-between space-y-4 sm:space-y-0 sm:flex-row">
       <button type="button" id="closeModalBtn" class="bg-red-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Annuler</button>
-      <button type="submit" id="validateForm" class="bg-green-600 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">Valider</button>
+      <input type="submit" value="Annuler"  id="closeModalBtn" class="bg-green-600 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+      <input type="submit" value="Valider" name="validateForm"id="validateForm" class="bg-green-600 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
     </div>
   </form>
 </div>
@@ -158,12 +157,32 @@
 
 <?php
   include '../config/config.php';
-if($_SERVER['REQUEST_METHOD']==='POST'){
-  echo "good";
-}else{
-  echo "false";
+if(isset($_POST['validateForm'])){
+  $matricule = $_POST['matricule'];
+  $marque=$_POST['marque'];
+  $modele=$_POST['modele'];
+  $annee=$_POST['productionDate'];
+  $fuelType=$_POST['fuelType'];
+  $status=$_POST['status'];
+  $prixvoiture=$_POST['prixvoiture'];
+
+  $imageName = $_FILES['imagevoiture']['name'];
+  $targetDir = "../../public/assets/images/";
+
+  $imagevoiture = $targetDir . basename($imageName);
+
+
+
+
+  $sql = "INSERT INTO voiture (matricule, marque, modele, Annee, type_carburant, image_voiture, etat, prix_location)  VALUES('$matricule','$marque','$modele','$annee','$fuelType','$imagevoiture','$status','$prixvoiture')";
+  mysqli_query($conn, $sql);
 }
+
+  $sql2 = "SELECT * from voiture";
+  $result  = mysqli_query($conn,$sql2);
+
 ?>
+
 
 
 
