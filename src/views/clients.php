@@ -186,7 +186,11 @@ $result = mysqli_query($conn, $sql2);
         }
       }
 
-
+      if (isset($_POST['remove'])) {
+        $idclient = $_POST['remove'];
+        $sql3 = "DELETE FROM client WHERE client_id='$idclient'";
+        mysqli_query($conn, $sql3);
+      }
 
       $result = mysqli_query($conn, $sql2);
       affichClient($result);
