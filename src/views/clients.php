@@ -263,7 +263,7 @@ echo '
 if(isset($_POST['EditForm'])){
 
   $idClient = $_POST['idclient'];
-  $nomClient = $_POST['nomClient'];
+  $nomClient = $_POST['nomclient'];
   $prenomClient = $_POST['prenomclient'];
   $telClient = $_POST['telclient'];
   $emailclient = $_POST['emailclient'];
@@ -271,7 +271,7 @@ if(isset($_POST['EditForm'])){
   $sql5="UPDATE client SET nom = '$nomClient', prenom = '$prenomClient', telephone = '$telClient', email = '$emailclient' 
   where client_id = '$idClient'";
   mysqli_query($conn,$sql5);
-// echo "<script>window.location.href = window.location.href;</script>";
+echo "<script>window.location.href = window.location.href;</script>";
 
 }
 ?>
