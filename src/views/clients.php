@@ -199,9 +199,82 @@ $result = mysqli_query($conn, $sql2);
   </table>
 </div>
 
+<?php
+
+if (isset($_POST['Edit'])) {
+  $idClient = $_POST['Edit'];
+
+  $sql4 = "SELECT * FROM client WHERE client_id = '$idClient'";
+  $result2 = mysqli_query($conn, $sql4);
+  $client = mysqli_fetch_assoc($result2);
+  
+  $nomClient = $client['nom'];
+  $prenomClient = $client['prenom'];
+  $telClient = $client['telephone'];
+  $emailclient = $client['email'];
 
 
+echo '
+<div id="vehicleModal" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <form id="vehicleForm" class="bg-white rounded-lg w-full max-w-[60rem] sm:max-w-3/4 md:max-w-2/3 p-4 sm:p-6 shadow-lg overflow-y-auto" method="POST"  enctype="multipart/form-data">
+        <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Modifier Voiture</h2>
+            <button id="closeVehicleModal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+            <div class="w-full space-y-4">
+                <div class="flex flex-col">
+                    <label for="idclient" class="font-medium text-gray-600 text-sm sm:text-base">ID Client</label>
+                    <input type="text" id="idclient" name="idclient" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$idClient.'" placeholder="Ex: A12345" readonly>
+                </div>
+                <div class="flex flex-col">
+                    <label for="nomclient" class="font-medium text-gray-600 text-sm sm:text-base">Nom</label>
+                    <input type="text" id="nomclient" name="nomclient" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$nomClient.'" placeholder="Ex: Renault">
+                </div>
+                <div class="flex flex-col">
+                    <label for="prenomclient" class="font-medium text-gray-600 text-sm sm:text-base">Prénom</label>
+                    <input type="text" id="prenomclient" name="prenomclient" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$prenomClient.'" placeholder="Ex: Clio">
+                </div>
+                  <div class="flex flex-col">
+                    <label for="emailclient" class="font-medium text-gray-600 text-sm sm:text-base">Email</label>
+                    <input type="text" id="emailclient" name="emailclient" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$emailclient.'" placeholder="Ex: Clio">
+                </div>
+                <div class="flex flex-col">
+                    <label for="telclient" class="font-medium text-gray-600 text-sm sm:text-base">Télephone</label>
+                    <input type="number" id="telclient" name="telclient" class="p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$telClient.'" placeholder="Ex: 2022">
+                </div>
+            
+            </div>
 
+        </div>
+
+        <div class="mt-6 sm:mt-8 flex justify-between space-y-4 sm:space-y-0 sm:flex-row">
+            <button id="closeModalBtn" class="bg-red-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Annuler</button>
+            <button type="submit" name="EditForm" class="bg-green-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-red-500">Edit</button>
+
+        </div>
+    </form>
+</div>';
+}
+if(isset($_POST['EditForm'])){
+
+  $idClient = $_POST['idclient'];
+  $nomClient = $_POST['nomClient'];
+  $prenomClient = $_POST['prenomclient'];
+  $telClient = $_POST['telclient'];
+  $emailclient = $_POST['emailclient'];
+
+  $sql5="UPDATE client SET nom = '$nomClient', prenom = '$prenomClient', telephone = '$telClient', email = '$emailclient' 
+  where client_id = '$idClient'";
+  mysqli_query($conn,$sql5);
+// echo "<script>window.location.href = window.location.href;</script>";
+
+}
+?>
 
 
 
