@@ -71,15 +71,15 @@
               </a>
             </li>
             <li class='border-b py-3 px-3'>
-              <a href='../../index.php' class='hover:text-[#007bff] text-[#007bff] block font-semibold text-base'>Accueil</a>
+              <a href='../../index.php' class='hover:text-[#007bff] text-black block font-semibold text-base'>Accueil</a>
             </li>
             <li class='border-b py-3 px-3'><a href='voiture.php'
-              class='hover:text-[#007bff] text-black block font-semibold text-base'>Voiture</a>
+              class='hover:text-[#007bff] text-[#007bff]  block font-semibold text-base'>Voiture</a>
             </li>
             <li class='border-b py-3 px-3'><a href='Contrats.php'
               class='hover:text-[#007bff] text-black block font-semibold text-base'>Contrats</a>
             </li>
-            <li class='border-b py-3 px-3'><a href='Clients.php'
+            <li class='border-b py-3 px-3'><a href='clients.php'
               class='hover:text-[#007bff] text-black block font-semibold text-base'>Clients</a>
             </li>
           </ul>
@@ -129,7 +129,7 @@
       <!-- Right Side Inputs -->
       <div class="w-full sm:w-1/3 bg-gray-100 rounded-lg p-4 space-y-4">
         <div class="flex flex-col">
-          <label for="imagevoiture" class="font-medium text-gray-600 text-sm sm:text-base">Image de Véhicule</label>
+          <label for="imagevoiture" class="font-medium text-gray-600 text-sm sm:text-base">Image de Voiture</label>
           <input type="file" id="imagevoiture" name="imagevoiture" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
         <div class="flex flex-col">
@@ -147,7 +147,7 @@
     </div>
 
     <div class="mt-6 sm:mt-8 flex justify-between space-y-4 sm:space-y-0 sm:flex-row">
-      <button type="button" id="closeModalBtn" class="bg-red-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Annuler</button>
+      <button type="submit" id="closeModalBtn" class="bg-red-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Annuler</button>
       <input type="submit" value="Valider" name="validateForm"id="validateForm" class="bg-green-600 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
     </div>
   </form>
@@ -156,7 +156,9 @@
 
 <?php
   include '../config/config.php';
+  
 if(isset($_POST['validateForm'])){
+  
   $matricule = $_POST['matricule'];
   $marque=$_POST['marque'];
   $modele=$_POST['modele'];
@@ -231,7 +233,110 @@ if(isset($_POST['validateForm'])){
       $result  = mysqli_query($conn,$sql2);
       affichvoiture($result);
 
+      if (isset($_POST['Edit'])) {
+        $matricule = $_POST['Edit'];
+
+        $sql4 = "SELECT * FROM voiture WHERE matricule = '$matricule'";
+        $result2 = mysqli_query($conn,$sql4);
+        $voiture = mysqli_fetch_assoc($result2);
+        $marque = $voiture['marque'];
+        $modele = $voiture['modele'];
+        $productionDate = $voiture['Annee'];
+        $fuelType = $voiture['type_carburant'];
+        $status = $voiture['etat'];
+        $prixvoiture = $voiture['prix_location'];
+        $imagevoiture = $voiture['image_voiture'];
+     
+
+      echo '
+      <div id="vehicleModal" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <form id="vehicleForm" class="bg-white rounded-lg w-full max-w-[60rem] sm:max-w-3/4 md:max-w-2/3 p-4 sm:p-6 shadow-lg overflow-y-auto" method="POST"  enctype="multipart/form-data">
+              <div class="flex justify-between items-center mb-4 sm:mb-6">
+                  <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">Modifier Voiture</h2>
+                  <button id="closeVehicleModal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                  </button>
+              </div>
+              <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                  <div class="w-full max-w-[50rem] sm:w-2/3 space-y-4">
+                      <div class="flex flex-col">
+                          <label for="matricule" class="font-medium text-gray-600 text-sm sm:text-base">Matricule</label>
+                          <input type="text" id="matricule" name="matricule" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$matricule.'" placeholder="Ex: A12345" readonly>
+                      </div>
+                      <div class="flex flex-col">
+                          <label for="marque" class="font-medium text-gray-600 text-sm sm:text-base">Marque</label>
+                          <input type="text" id="marque" name="marque" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$marque.'" placeholder="Ex: Renault">
+                      </div>
+                      <div class="flex flex-col">
+                          <label for="modele" class="font-medium text-gray-600 text-sm sm:text-base">Modèle</label>
+                          <input type="text" id="modele" name="modele" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$modele.'" placeholder="Ex: Clio">
+                      </div>
+                      <div class="flex flex-col">
+                          <label for="productionDate" class="font-medium text-gray-600 text-sm sm:text-base">Date de mise en circulation</label>
+                          <input type="number" id="productionDate" name="productionDate" class="p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$productionDate.'" placeholder="Ex: 2022">
+                      </div>
+                      <div class="flex flex-col">
+                          <label for="fuelType" class="font-medium text-gray-600 text-sm sm:text-base">Type carburant</label>
+                          <select id="fuelType" name="fuelType" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                              <option value="Diesel" '.($fuelType == 'Diesel' ? 'selected' : '').'>Diesel</option>
+                              <option value="Essence" '.($fuelType == 'Essence' ? 'selected' : '').'>Essence</option>
+                              <option value="Electrique" '.($fuelType == 'Electrique' ? 'selected' : '').'>Electrique</option>
+                              <option value="Hybride" '.($fuelType == 'Hybride' ? 'selected' : '').'>Hybride</option>
+                          </select>
+                      </div>
+                  </div>
+  
+                  <div class="w-full sm:w-1/3 bg-gray-100 rounded-lg p-4 space-y-4">
+                  
+                      <div class="flex flex-col">
+                          <label for="imagevoiture" class="font-medium text-gray-600 text-sm sm:text-base">Image de Voiture</label>
+                          <img src="'.$imagevoiture.'" alt="Image Preview" class="h-34  object-cover rounded-lg" />
+                      </div>
+                      <div class="flex flex-col">
+                          <label for="status" class="font-medium text-gray-600 text-sm sm:text-base">Etat</label>
+                          <select id="status" name="status" class="mt-2 p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                              <option value="En Parc" '.($status == 'En Parc' ? 'selected' : '').'>En Parc</option>
+                              <option value="Sous Location" '.($status == 'Sous Location' ? 'selected' : '').'>Sous Location</option>
+                          </select>
+                      </div>
+                      <div class="flex flex-col">
+                          <label for="prixvoiture" class="font-medium text-gray-600 text-sm sm:text-base">Prix Location</label>
+                          <input type="number" id="prixvoiture" name="prixvoiture" class="p-2 sm:p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="'.$prixvoiture.'" placeholder="Ex: 3000 MAD">
+                      </div>
+                  </div>
+              </div>
+  
+              <div class="mt-6 sm:mt-8 flex justify-between space-y-4 sm:space-y-0 sm:flex-row">
+                  <button id="closeModalBtn" class="bg-red-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Annuler</button>
+                  <button type="submit" name="EditForm" class="bg-green-500 text-white py-2 sm:py-3 px-6 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-red-500">Edit</button>
+
+              </div>
+          </form>
+      </div>';
+     
+       }
+       if(isset($_POST['EditForm'])){
+
+        $matricule = $_POST['matricule'];
+        $marque=$_POST['marque'];
+        $modele=$_POST['modele'];
+        $annee=$_POST['productionDate'];
+        $fuelType=$_POST['fuelType'];
+        $status=$_POST['status'];
+        $prixvoiture=$_POST['prixvoiture'];
+
+        $sql5="UPDATE voiture SET marque = '$marque', modele = '$modele', Annee = '$annee', type_carburant = '$fuelType', etat = '$status', prix_location = '$prixvoiture' 
+        where matricule = '$matricule'";
+        mysqli_query($conn,$sql5);
+    echo "<script>window.location.href = window.location.href;</script>";
+
+      }
+     
+
     
+
       ?>
 
 
