@@ -1,3 +1,10 @@
+<?php
+session_start(); 
+
+if (!isset($_SESSION["user"])) {
+    header("Location: login.php"); 
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +29,7 @@
                   clip-rule="evenodd"></path>
               </svg>
             </button>
-            <a href="../index.php" class="ml-8">
+            <a href="../../index.php" class="ml-8">
               <img src="../../public/assets/images/logo.png" alt="logo"
                 class='w-32 max-sm:hidden' />
               <img src="../../public/assets/images/logo.png" alt="logo"
@@ -43,6 +50,13 @@
 
           <div class='flex items-center space-x-4 max-md:ml-auto'>
             <button id="buttonAjouter" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter un client</button>
+            <button type="button" class="border-none mb-2 outline-none flex items-center justify-center rounded-full p-2 hover:bg-gray-100 transition-all">
+              <a href="logout.php" class="flex items-center justify-center">
+             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 cursor-pointer fill-black" viewBox="0 0 24 24">
+              <path d="M10 17L15 12L10 7V10H4V14H10V17ZM21 3H12V5H21V19H12V21H21C22.104 21 23 20.104 23 19V5C23 3.896 22.104 3 21 3Z"/>
+              </svg>
+              </a>
+           </button>
           </div>
         </div>
 
@@ -63,11 +77,11 @@
           <ul
             class='block space-x-4 space-y-3 fixed bg-white w-1/2 min-w-[300px] top-0 left-0 p-4 h-full shadow-md overflow-auto z-50'>
             <li class='pb-4 px-3'>
-              <a href="index.php"><img src="../../public/assets/images/logo.png" alt="logo" class='w-36' />
+              <a href="../../index.php"><img src="../../public/assets/images/logo.png" alt="logo" class='w-36' />
               </a>
             </li>
             <li class='border-b pb-4 px-3 hidden'>
-              <a href="index.php"><img src="../../public/assets/images/logo.png" alt="logo" class='w-36' />
+              <a href="../../index.php"><img src="../../public/assets/images/logo.png" alt="logo" class='w-36' />
               </a>
             </li>
             <li class='border-b py-3 px-3'>
@@ -76,10 +90,10 @@
             <li class='border-b py-3 px-3'><a href='voiture.php'
               class='hover:text-[#007bff] text-black block font-semibold text-base'>Voiture</a>
             </li>
-            <li class='border-b py-3 px-3'><a href='Contrats.php'
+            <li class='border-b py-3 px-3'><a href='contrats.php'
               class='hover:text-[#007bff] text-black block font-semibold text-base'>Contrats</a>
             </li>
-            <li class='border-b py-3 px-3'><a href='Clients.php'
+            <li class='border-b py-3 px-3'><a href='clients.php'
               class='hover:text-[#007bff] text-[#007bff] block font-semibold text-base'>Clients</a>
             </li>
           </ul>
@@ -273,6 +287,23 @@ if(isset($_POST['EditForm'])){
   mysqli_query($conn,$sql5);
 echo "<script>window.location.href = window.location.href;</script>";
 
+}
+
+$result  = mysqli_query($conn,$sql2);
+while($i = mysqli_fetch_row($result)){
+ echo '<div class="lg:hidden grid grid-cols-1 gap-6 mt-6">';
+ echo '<div class="bg-white shadow-lg rounded-lg p-4">';
+ echo '<h3 class="text-xl font-semibold text-gray-800">'.$i[1].'</h3>';
+ echo '<p class="text-sm text-gray-600">'.$i[0].'</p>';
+ echo '<p class="text-sm text-gray-600">'.$i[2].'</p>';
+ echo '<p class="text-sm text-gray-600">'.$i[3].'</p>';
+ echo '<form method="POST">
+ <div class="mt-4 flex space-x-3">
+ <button type="submit" name="Edit" value="'.$i[0].'" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full">Edit</button>
+ <button type="submit" name="remove" value="'.$i[0].'" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 w-full">Remove</button>
+ </div>
+ </form>
+ </div>';
 }
 ?>
 

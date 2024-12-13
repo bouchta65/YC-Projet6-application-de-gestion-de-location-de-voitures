@@ -1,0 +1,123 @@
+
+<div class="hidden lg:block overflow-x-auto">
+  <table class="min-w-full bg-white shadow-md rounded-lg border-collapse">
+    <thead>
+      <tr class="bg-gray-200 text-gray-700">
+        <th class="py-3 px-4 text-left text-sm font-semibold">Image</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Marque</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Modéle</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Année</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Prix par jour</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">status</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b hover:bg-gray-50">
+        <td class="py-3 px-4">
+          <img src="../assets/images/renault.png" alt="Car 1" class=" h-16 object-cover rounded-lg">
+        </td>
+        <td class="py-3 px-4 text-sm">Car Model A</td>
+        <td class="py-3 px-4 text-sm">Model X</td>
+        <td class="py-3 px-4 text-sm">2021</td>
+        <td class="py-3 px-4 text-sm">$50</td>
+        <td class="py-3 px-4 text-sm">Sous Location</td>
+        <td class="py-3 px-4 text-sm">
+          <button class="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600">Edit</button>
+          <button class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="lg:hidden grid grid-cols-1 gap-6 mt-6">
+  <div class="bg-white shadow-lg rounded-lg p-4">
+    <img src="../assets/images/renault.png" alt="Car 1" class="w-full  object-cover rounded-lg mb-4">
+    <h3 class="text-xl font-semibold text-gray-800">Car Model A</h3>
+    <p class="text-sm text-gray-600">Model X</p>
+    <p class="text-sm text-gray-600">2021</p>
+    <p class="text-sm text-gray-600">$50 per day</p>
+    <div class="mt-4 flex space-x-3">
+      <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full">Edit</button>
+      <button class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 w-full">Remove</button>
+    </div>
+  </div>
+  <div class="bg-white shadow-lg rounded-lg p-4">
+    <img src="car2.jpg" alt="Car 2" class="w-full h-40 object-cover rounded-lg mb-4">
+    <h3 class="text-xl font-semibold text-gray-800">Car Model B</h3>
+    <p class="text-sm text-gray-600">Model Y</p>
+    <p class="text-sm text-gray-600">2020</p>
+    <p class="text-sm text-gray-600">$45 per day</p>
+    <div class="mt-4 flex space-x-3">
+      <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 w-full">Edit</button>
+      <button class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 w-full">Remove</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="hidden lg:block overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg border-collapse">
+      <thead>
+        <tr class="bg-gray-200 text-gray-700">
+          <th class="py-3 px-4 text-left text-sm font-semibold">Image</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold">Marque</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold">Modéle</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold">Année</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold">Prix par jour</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold">status</th>
+          <th class="py-3 px-4 text-left text-sm font-semibold">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+  
+        <?php 
+  while($i = mysqli_fetch_row($result)){
+    echo '<tr class="border-b hover:bg-gray-50">';
+    echo '<td class="py-3 px-4">';
+    echo '<img src="'.$i[5].'" class=" h-16 object-cover rounded-lg">';
+    echo '</td>';
+    echo '<td class="py-3 px-4 text-sm">'.$i[1].'</td>';
+    echo '<td class="py-3 px-4 text-sm">'.$i[2].'</td>';
+    echo '<td class="py-3 px-4 text-sm">'.$i[3].'</td>';
+    echo '<td class="py-3 px-4 text-sm">'.$i[7].'</td>';
+    echo '<td class="py-3 px-4 text-sm">'.$i[6].'</td>';
+    echo '<td class="py-3 px-4 text-sm">';
+    echo '   <form method="POST" action="">
+                <button type="submit" name="Edit" value="'.$i[0].'" class="bg-blue-500  text-white py-1 px-3 rounded-md hover:bg-red-600">Edit</button>
+                <button type="submit" name="remove" value="'.$i[0].'" class="bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-600">Remove</button>
+              </form>';
+    '</td>';
+  '</tr>';
+  }
+  
+  if(isset($_POST['Edit'])){
+  
+  }
+        ?>
+      </tbody>
+    </table>
+  </div>

@@ -7,8 +7,10 @@ const openVehicleModalBtn = document.querySelector('#openVehicleModalBtn')
 const closeVehicleModalBtn = document.querySelector('#closeVehicleModal')
 const closeModalBtnAlt = document.querySelector('#closeModalBtn')
 const form = document.querySelector('#vehicleForm')
-
 const valideButton = document.querySelector('#validateForm')
+
+
+
 function openMenu(){
     button.addEventListener('click',()=>{
         menu.classList.toggle("hidden")
@@ -50,18 +52,18 @@ function videPopupAjoute(){
       });
 }
 
-function validationForm(){
+function validationFormvoiture(){
     valideButton.addEventListener('click',(event)=>{
-        const chassisNumber = document.querySelector('#chassisNumber').value.trim();
-        const licensePlate = document.querySelector('#licensePlate').value.trim();
-        const brand = document.querySelector('#brand').value.trim();
+        const modele = document.querySelector('#modele').value.trim();
+        const matricule = document.querySelector('#matricule').value.trim();
+        const marque = document.querySelector('#marque').value.trim();
         const productionDate = document.querySelector('#productionDate').value.trim();
         const fuelType = document.querySelector('#fuelType').value.trim();
-        const vehicleImage = document.querySelector('#vehicleImage').value.trim();
+        const imagevoiture = document.querySelector('#imagevoiture').value.trim();
         const status = document.querySelector('#status').value.trim();
-        const rentalPrice = document.querySelector('#rentalPrice').value.trim();
+        const prixvoiture = document.querySelector('#prixvoiture').value.trim();
 
-        if (!chassisNumber || !licensePlate || !brand || !productionDate || !fuelType || !vehicleImage || !status || !rentalPrice) {
+        if (!modele || !matricule || !marque || !productionDate || !fuelType || !imagevoiture || !status || !prixvoiture) {
             alert("Tous les champs doivent être remplis");
             event.preventDefault();
             return false;
@@ -71,11 +73,32 @@ function validationForm(){
    
 }
 
+function validationFormClient() {
+    valideButton.addEventListener('click', (event) => {
+        const idClient = document.querySelector('#idclient').value.trim();
+        const nomClient = document.querySelector('#nomclient').value.trim();
+        const prenomClient = document.querySelector('#prenomclient').value.trim();
+        const telClient = document.querySelector('#telclient').value.trim();
+        const emailclient = document.querySelector('#emailclient').value.trim();
+
+        if (!idClient || !nomClient || !prenomClient || !telClient || !emailclient) {
+            alert("Tous les champs doivent être remplis");
+            event.preventDefault();
+            return false;
+        }
+
+
+        return true; 
+    });
+}
+
+
 openMenu()
 closeMenu()
 openPopupAjout()
 clocsePopupAjoute()
 annulePopupAjoute()
-validationForm()
+validationFormvoiture()
+validationFormClient()
 
 
