@@ -1,4 +1,27 @@
+<?php
+include '../db/config.php';
+session_start(); 
 
+if(isset($_POST['submit'])){
+  $user = $_POST['email'];
+  $pass = $_POST['password'];
+  $sql = "SELECT email,password from admin where email='$user'";
+  $result = mysqli_query($conn,$sql);
+  
+  if($result && mysqli_num_rows($result)>0){
+    $i = mysqli_fetch_assoc($result);
+    if($i['password']===$pass){
+      $_SESSION["user"] = $i['email'];
+      header("Location: ../../index.php");
+    }else {
+      echo "<script>alert('Mot de passe incorrect');</script>";
+  }
+} else {
+  echo "<script>alert('Email non trouvé');</script>";
+}
+  }
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
