@@ -92,6 +92,27 @@ function validationFormClient() {
     });
 }
 
+function validationFormContrat(){
+    valideButton.addEventListener('click', (event) => {
+        const idClient = document.querySelector('#idclient').value.trim();
+        const idvoiture = document.querySelector('#idvoiture').value.trim();
+        const datedebut = document.querySelector('#datedebut').value.trim();
+        const datefin = document.querySelector('#datefin').value.trim();
+
+        if (!idClient || !idvoiture || !datedebut || !datefin) {
+            alert("Tous les champs doivent être remplis");
+            event.preventDefault();
+            return false;
+        }
+        if (datedebut > datefin) {
+            alert("La date de début doit être légèrement antérieure à la date de fin");
+            event.preventDefault();
+            return false;
+        }
+
+        return true; 
+    });
+}
 
 openMenu()
 closeMenu()
@@ -100,5 +121,6 @@ clocsePopupAjoute()
 annulePopupAjoute()
 validationFormvoiture()
 validationFormClient()
+validationFormContrat()
 
 
