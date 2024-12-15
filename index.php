@@ -4,6 +4,7 @@ session_start();
 if (!isset($_SESSION["user"])) {
     header("Location: src/views/login.php"); 
 }
+include "src/db/config.php";
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +50,7 @@ if (!isset($_SESSION["user"])) {
           </div>
 
           <div class='flex items-center space-x-4 max-md:ml-auto'>
-          <button id="buttonAjouter" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter une voiture</button>
+          <button id="buttonAjouter" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><a href="src/views/contrats.php">Voir Les Contrats</a></button>
           <button type="button" class="border-none outline-none flex items-center justify-center rounded-full p-2 hover:bg-gray-100 transition-all">
               <a href="src/views/logout.php" class="flex items-center justify-center">
              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 cursor-pointer fill-black" viewBox="0 0 24 24">
@@ -104,29 +105,45 @@ if (!isset($_SESSION["user"])) {
 
 
     <div class="container mx-auto p-6">
-  <!-- Title -->
-  <h1 class="text-3xl font-bold text-gray-800 mb-6"> statistique</h1>
+  <h1 class="text-3xl font-bold text-gray-800 mb-6"> Statistiques :</h1>
 
-  <!-- Grid of Cards -->
+  <?php
+  $sql = "SELECT COUNT(*)  FROM contrat";
+  $result = mysqli_query($conn,$sql);
+  $countcontrat = mysqli_fetch_row($result);
+
+  $sqll = "SELECT SUM(prixtotal) from contrat";
+  $resultt = mysqli_query($conn,$sqll);
+  $prixtotal = mysqli_fetch_row($resultt);
+  
+  $sqlll= "SELECT count(*) from client";
+  $resulttt = mysqli_query($conn,$sqlll);
+  $countclient = mysqli_fetch_row($resulttt);
+
+  $sqllll= "SELECT count(*) from voiture";
+  $resultttt = mysqli_query($conn,$sqllll);
+  $countvoiture = mysqli_fetch_row($resultttt);
+  ?>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
     <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-      <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Users</h2>
-      <p class="text-3xl font-bold text-blue-600">10,492</p>
+      <h2 class="text-xl font-semibold text-gray-700 mb-2">Nombre total des clients</h2>
+      <p class="text-3xl font-bold text-blue-600"><?php echo $countclient[0]?></p>
       <p class="text-sm text-gray-500 mt-2">↑ 12% from last month</p>
     </div>
     <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-      <h2 class="text-xl font-semibold text-gray-700 mb-2">Revenue</h2>
-      <p class="text-3xl font-bold text-green-600">$84,320</p>
+      <h2 class="text-xl font-semibold text-gray-700 mb-2">Revenus</h2>
+      <p class="text-3xl font-bold text-green-600">$<?php echo $prixtotal[0]?> DH</p>
       <p class="text-sm text-gray-500 mt-2">↑ 8% from last month</p>
     </div>
     <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-      <h2 class="text-xl font-semibold text-gray-700 mb-2">Active Projects</h2>
-      <p class="text-3xl font-bold text-purple-600">23</p>
+      <h2 class="text-xl font-semibold text-gray-700 mb-2">Nembre des Contrats</h2>
+      <p class="text-3xl font-bold text-purple-600"><?php echo $countcontrat[0] ?></p>
       <p class="text-sm text-gray-500 mt-2">↓ 2 from last month</p>
     </div>
     <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
-      <h2 class="text-xl font-semibold text-gray-700 mb-2">Tasks Completed</h2>
-      <p class="text-3xl font-bold text-orange-600">1,342</p>
+      <h2 class="text-xl font-semibold text-gray-700 mb-2">Nembre des Voitures</h2>
+      <p class="text-3xl font-bold text-orange-600"><?php echo $countvoiture[0] ?></p>
       <p class="text-sm text-gray-500 mt-2">↑ 18% from last month</p>
     </div>
   </div>
