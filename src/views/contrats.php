@@ -176,8 +176,11 @@ if(isset($_POST['validateForm'])){
   $datedebut = $_POST['datedebut'];
   $datefin = $_POST['datefin'];
   $duree = (strtotime($datefin) - strtotime($datedebut)) / (60 * 60 * 24);
-
-  $sql = "INSERT INTO contrat (voiture_id,client_id,date_debut,date_fin,Duree) VALUES ('$idvoiture', '$idclient', '$datedebut','$datefin', '$duree')";
+  $sqll = "SELECT prix_location from voiture where matricule = '$idvoiture'";
+  $result = mysqli_query($conn,$sqll);
+  $prix = mysqli_fetch_row($result);
+  $prixtotall = $prix[0]*$duree;
+  $sql = "INSERT INTO contrat (voiture_id,client_id,date_debut,date_fin,Duree,prixtotal) VALUES ('$idvoiture', '$idclient', '$datedebut','$datefin', '$duree','$prixtotall')";
   mysqli_query($conn, $sql);
 }
 
@@ -197,6 +200,7 @@ $result = mysqli_query($conn, $sql2);
         <th class="py-3 px-4 text-left text-sm font-semibold">Date debut</th>
         <th class="py-3 px-4 text-left text-sm font-semibold">Date Fin</th>
         <th class="py-3 px-4 text-left text-sm font-semibold">Duree</th>
+        <th class="py-3 px-4 text-left text-sm font-semibold">Prix Total</th>
         <th class="py-3 px-4 text-left text-sm font-semibold">Actions</th>
       </tr>
     </thead>
@@ -210,11 +214,12 @@ $result = mysqli_query($conn, $sql2);
           echo '<td class="py-3 px-4 text-sm">'.$i[2].'</td>'; 
           echo '<td class="py-3 px-4 text-sm">'.$i[1].'</td>'; 
           echo '<td class="py-3 px-4">';
-          echo '<img src="'.$i[11].'" class=" h-16 object-cover rounded-lg">';
+          echo '<img src="'.$i[12].'" class=" h-16 object-cover rounded-lg">';
           echo '</td>';
           echo '<td class="py-3 px-4 text-sm">'.$i[3].'</td>'; 
           echo '<td class="py-3 px-4 text-sm">'.$i[4].'</td>'; 
           echo '<td class="py-3 px-4 text-sm">'.$i[5].'</td>'; 
+          echo '<td class="py-3 px-4 text-sm">'.$i[6].'DH</td>'; 
           echo '<td class="py-3 px-4 text-sm">';
           echo '   <form method="POST" action="">
                       <button type="submit" name="Edit" value="'.$i[0].'" class="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600">Edit</button>
@@ -250,7 +255,6 @@ if (isset($_POST['Edit'])) {
   $idvoiture = $contrat['voiture_id'];
   $datedebut = $contrat['date_debut'];
   $datefin = $contrat['date_fin'];
-  $duree = (strtotime($datefin) - strtotime($datedebut)) / (60 * 60 * 24);
 
 
 echo '
@@ -301,7 +305,15 @@ if(isset($_POST['EditForm'])){
     $datefin = $_POST['datefin'];
     $duree = (strtotime($datefin) - strtotime($datedebut)) / (60 * 60 * 24);
 
-  $sql5="UPDATE contrat SET date_debut = '$datedebut', date_fin = '$datefin', Duree = '$duree'
+    $sqlll = "SELECT voiture_id from contrat where contrat_id= '$idcontrat'";
+    $result = mysqli_query($conn,$sqlll);
+    $idvoiture = mysqli_fetch_row($result);
+    $sqll = "SELECT prix_location from voiture where matricule = '$idvoiture[0]'";
+    $result = mysqli_query($conn,$sqll);
+    $prix = mysqli_fetch_row($result);
+    $prixtotall = $prix[0]*$duree;
+
+  $sql5="UPDATE contrat SET date_debut = '$datedebut', date_fin = '$datefin', Duree = '$duree', prixtotal= '$prixtotall'
   where contrat_id = '$idcontrat'";
   mysqli_query($conn,$sql5);
   echo "<script>window.location.href = window.location.href;</script>";
